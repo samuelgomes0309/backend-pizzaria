@@ -4,6 +4,7 @@ import { LoginUserController } from "./controllers/user/LoginUserController";
 import { InfoUserController } from "./controllers/user/InfoUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { CreateCategoryController } from "./controllers/category/CreateCategoryController";
+import { ListCategoryController } from "./controllers/category/ListCategoryController";
 
 export const router = Router();
 
@@ -22,3 +23,5 @@ router.post(
 	isAuthenticated,
 	new CreateCategoryController().handle
 );
+
+router.get("/categories", isAuthenticated, new ListCategoryController().handle);

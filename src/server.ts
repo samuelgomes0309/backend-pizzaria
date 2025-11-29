@@ -14,7 +14,18 @@ app.use(router);
 
 const port = 3333;
 
-const message = `Servidor iniciado na porta ${port}. -- [${new Date().toLocaleString()}] `;
+//cores console
+const blue = "\x1b[34m";
+const yellow = "\x1b[33m";
+const red = "\x1b[31m";
+const reset = "\x1b[0m";
+
+const message =
+	`${blue}Servidor iniciado na porta${reset} ` +
+	`${yellow}${port}${reset}` +
+	`. -- [` +
+	`${red}${new Date().toLocaleString()}${reset}` +
+	`]`;
 
 //middleware global
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

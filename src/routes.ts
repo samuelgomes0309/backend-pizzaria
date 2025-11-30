@@ -5,8 +5,15 @@ import { InfoUserController } from "./controllers/user/InfoUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { CreateCategoryController } from "./controllers/category/CreateCategoryController";
 import { ListCategoryController } from "./controllers/category/ListCategoryController";
+import { CreateProductController } from "./controllers/product/CreateProductController";
+import uploadConfig from "./config/multer";
+import multer from "multer";
 
 export const router = Router();
+
+// Middleware de arquivo
+
+const upload = multer(uploadConfig.upload("./tmp"));
 
 // Rotas de usuarios //
 
@@ -16,7 +23,7 @@ router.post("/login", new LoginUserController().handle);
 
 router.get("/me", isAuthenticated, new InfoUserController().handle);
 
-// Rotas de Categorias/Produtos //
+// Rotas de Categorias //
 
 router.post(
 	"/add/category",
@@ -25,3 +32,12 @@ router.post(
 );
 
 router.get("/categories", isAuthenticated, new ListCategoryController().handle);
+
+// Rotas de Produtos //
+
+router.post(
+	"/add/product",
+	isAuthenticated,
+	upload.single("file"),
+	new CreateProductController().handle
+);

@@ -3,10 +3,13 @@ import "express-async-errors";
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { router } from "./routes";
+import path from "path";
 
 const app = express();
 
 app.use(express.json());
+
+app.use("/files", express.static(path.resolve(__dirname, "..", "tmp")));
 
 app.use(cors());
 

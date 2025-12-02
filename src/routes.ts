@@ -10,6 +10,7 @@ import uploadConfig from "./config/multer";
 import multer from "multer";
 import { ListProductByCategoryController } from "./controllers/product/ListProductByCategoryController";
 import { CreateOrderController } from "./controllers/order/CreateOrderController";
+import { DeleteOrderController } from "./controllers/order/DeleteOrderController";
 
 export const router = Router();
 
@@ -53,3 +54,9 @@ router.get(
 //  Rotas de Pedidos //
 
 router.post("/add/order", isAuthenticated, new CreateOrderController().handle);
+
+router.delete(
+	"/remove/order",
+	isAuthenticated,
+	new DeleteOrderController().handle
+);

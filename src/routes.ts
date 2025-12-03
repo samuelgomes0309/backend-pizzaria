@@ -11,6 +11,7 @@ import multer from "multer";
 import { ListProductByCategoryController } from "./controllers/product/ListProductByCategoryController";
 import { CreateOrderController } from "./controllers/order/CreateOrderController";
 import { DeleteOrderController } from "./controllers/order/DeleteOrderController";
+import { AddItemController } from "./controllers/order/AddItemController";
 
 export const router = Router();
 
@@ -60,3 +61,5 @@ router.delete(
 	isAuthenticated,
 	new DeleteOrderController().handle
 );
+
+router.put("/order/item", isAuthenticated, new AddItemController().handle);

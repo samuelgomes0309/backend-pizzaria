@@ -11,41 +11,39 @@ class RemoveItemService {
 		if (!order_id) {
 			throw new Error("Order incorrect");
 		}
-		const orderExists = await prisma.order.findUnique({
-			where: {
-				id: order_id,
-			},
-		});
-		const itemQtd = Number(amount);
-		if (isNaN(itemQtd) || itemQtd <= 0) {
-			throw new Error("Amount incorrect");
-		}
-		if (!orderExists) {
-			throw new Error("Order not found");
-		}
-		const hasItem = await prisma.item.findFirst({
+		const item = await prisma.item.findFirst({
 			where: {
 				orderId: order_id,
 				productId: product_id,
 			},
+			include: {
+				order: true,
+			},
 		});
-		if (!hasItem) {
+		if (!item) {
 			throw new Error("Item not found");
 		}
-		if (itemQtd < hasItem.amount) {
+		if (item.order.draft === false) {
+			throw new Error("Order already shipped");
+		}
+		const itemQtd = Number(amount);
+		if (isNaN(itemQtd) || itemQtd <= 0) {
+			throw new Error("Amount incorrect");
+		}
+		if (itemQtd < item.amount) {
 			const updatedItem = await prisma.item.update({
 				where: {
-					id: hasItem.id,
+					id: item.id,
 				},
 				data: {
-					amount: hasItem.amount - itemQtd,
+					amount: item.amount - itemQtd,
 				},
 			});
 			return updatedItem;
 		}
 		const deletedItem = await prisma.item.delete({
 			where: {
-				id: hasItem.id,
+				id: item.id,
 			},
 		});
 		return deletedItem;

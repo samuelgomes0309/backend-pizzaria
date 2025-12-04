@@ -13,6 +13,7 @@ import { CreateOrderController } from "./controllers/order/CreateOrderController
 import { DeleteOrderController } from "./controllers/order/DeleteOrderController";
 import { AddItemController } from "./controllers/order/AddItemController";
 import { RemoveItemController } from "./controllers/order/RemoveItemController";
+import { FinishOrderController } from "./controllers/order/FinishOrderController";
 
 export const router = Router();
 
@@ -64,8 +65,15 @@ router.delete(
 );
 
 router.post("/order/add/item", isAuthenticated, new AddItemController().handle);
+
 router.delete(
 	"/order/remove/item",
 	isAuthenticated,
 	new RemoveItemController().handle
+);
+
+router.post(
+	"/order/:order_id/finish",
+	isAuthenticated,
+	new FinishOrderController().handle
 );

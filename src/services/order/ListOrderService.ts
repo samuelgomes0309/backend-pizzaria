@@ -5,6 +5,7 @@ class ListOrderService {
 		const orders = await prisma.order.findMany({
 			where: {
 				draft: false,
+				status: false,
 			},
 			orderBy: {
 				updated_at: "desc",

@@ -4,7 +4,7 @@ interface RequestProps {
 	order_id: string;
 }
 
-class FinishOrderService {
+class StartOrderService {
 	async execute({ order_id }: RequestProps) {
 		if (!order_id) {
 			throw new Error("Order incorrect");
@@ -32,4 +32,4 @@ class FinishOrderService {
 	}
 }
 
-export { FinishOrderService };
+export { StartOrderService };

@@ -13,9 +13,11 @@ import { CreateOrderController } from "./controllers/order/CreateOrderController
 import { DeleteOrderController } from "./controllers/order/DeleteOrderController";
 import { AddItemController } from "./controllers/order/AddItemController";
 import { RemoveItemController } from "./controllers/order/RemoveItemController";
-import { FinishOrderController } from "./controllers/order/FinishOrderController";
+
 import { ListOrderController } from "./controllers/order/ListOrderController";
 import { DetailOrderController } from "./controllers/order/DetailOrderController";
+import { StartOrderController } from "./controllers/order/StartOrderController";
+import { CloseOrderController } from "./controllers/order/CloseOrderController";
 
 export const router = Router();
 
@@ -75,9 +77,15 @@ router.delete(
 );
 
 router.post(
-	"/order/:order_id/finish",
+	"/order/:order_id/startOrder",
 	isAuthenticated,
-	new FinishOrderController().handle
+	new StartOrderController().handle
+);
+
+router.post(
+	"/order/:order_id/closeOrder",
+	isAuthenticated,
+	new CloseOrderController().handle
 );
 
 router.get("/orders", isAuthenticated, new ListOrderController().handle);

@@ -18,6 +18,7 @@ import { ListOrderController } from "./controllers/order/ListOrderController";
 import { DetailOrderController } from "./controllers/order/DetailOrderController";
 import { StartOrderController } from "./controllers/order/StartOrderController";
 import { CloseOrderController } from "./controllers/order/CloseOrderController";
+import { ListProductsController } from "./controllers/product/ListProductsController";
 
 export const router = Router();
 
@@ -53,10 +54,12 @@ router.post(
 );
 
 router.get(
-	"/products",
+	"/products/category",
 	isAuthenticated,
 	new ListProductByCategoryController().handle
 );
+
+router.get("/products", isAuthenticated, new ListProductsController().handle);
 
 //  Rotas de Pedidos //
 

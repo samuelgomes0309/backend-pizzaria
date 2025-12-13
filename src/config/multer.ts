@@ -9,7 +9,12 @@ export default {
 				destination: resolve(__dirname, "..", "..", folder),
 				filename: (req, file, callback) => {
 					const fileHash = crypto.randomBytes(16).toString("hex");
-					const fileName = `${fileHash}-${file.originalname}`;
+					const originalnameFormated = file.originalname
+						.trim()
+						.toLowerCase()
+						.replace(/\s+/g, "-")
+						.replace(/[^a-z0-9.-]/g, "");
+					const fileName = `${fileHash}-${originalnameFormated}`;
 					return callback(null, fileName);
 				},
 			}),

@@ -24,7 +24,7 @@ export const router = Router();
 
 // Middleware de arquivo
 
-const upload = multer(uploadConfig.upload("./tmp"));
+const upload = multer(uploadConfig.upload("tmp"));
 
 // Rotas de usuarios //
 

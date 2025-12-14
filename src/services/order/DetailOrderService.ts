@@ -17,7 +17,32 @@ class DetailOrderService {
 				items: true,
 			},
 		});
-		return order;
+		const products = await prisma.product.findMany({});
+		const { items, created_at, draft, id, name, status, table, updated_at } =
+			order;
+		const newItems = items.map((item) => {
+			const detailProduct = products.find(
+				(product) => item.productId === product.id
+			);
+			if (!detailProduct) {
+				throw new Error("Produto não encontrado");
+			}
+			return {
+				...item,
+				product: detailProduct,
+			};
+		});
+		const orderFormated = {
+			created_at,
+			draft,
+			id,
+			name,
+			status,
+			table,
+			updated_at,
+			items: newItems,
+		};
+		return orderFormated;
 	}
 }
 

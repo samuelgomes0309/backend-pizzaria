@@ -3,10 +3,9 @@ import { RemoveItemService } from "../../services/order/RemoveItemService";
 
 class RemoveItemController {
 	async handle(req: Request, res: Response) {
-		const { amount, order_id, product_id } = req.body;
+		const { order_id, product_id } = req.body;
 		const removeItemService = new RemoveItemService();
 		const item = await removeItemService.execute({
-			amount,
 			order_id,
 			product_id,
 		});
